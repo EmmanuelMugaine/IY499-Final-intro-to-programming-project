@@ -1,0 +1,224 @@
+Account ID,Date,Company Name,Amount,Category,Description
+00001,2025-07-01,Employer Ltd,1800.00,Income,Monthly salary
+00001,2025-07-16,IKEA,-22.22,Other,Purchase
+00001,2025-07-17,Netflix,-14.03,Bills,Monthly bill
+00001,2025-07-19,Trainline,-7.67,Transport,Travel
+00001,2025-07-25,Sainsbury's,-12.49,Groceries,Weekly shop
+00001,2025-07-28,Wagamama,-8.88,Dining,Meal out
+00001,2025-07-29,National Express,-9.42,Transport,Travel
+00001,2025-08-01,Employer Ltd,1800.00,Income,Monthly salary
+00001,2025-08-01,Aldi,-36.91,Groceries,Weekly shop
+00001,2025-08-01,TfL,-13.17,Transport,Travel
+00001,2025-08-05,Uber,-9.31,Transport,Travel
+00001,2025-08-07,Spotify,-79.76,Bills,Monthly bill
+00001,2025-08-07,Sainsbury's,-16.47,Groceries,Weekly shop
+00001,2025-08-08,Morrisons,-34.19,Groceries,Weekly shop
+00001,2025-08-09,Tesco,-21.78,Groceries,Weekly shop
+00001,2025-08-11,Lidl,-14.31,Groceries,Weekly shop
+00001,2025-08-11,Uber,-10.05,Transport,Travel
+00001,2025-08-16,TfL,-23.85,Transport,Travel
+00001,2025-08-16,McDonald's,-19.48,Dining,Meal out
+00001,2025-08-19,McDonald's,-26.76,Dining,Meal out
+00001,2025-08-20,Boots,-52.94,Other,Purchase
+00001,2025-08-20,Wagamama,-22.31,Dining,Meal out
+00001,2025-08-22,Lidl,-22.02,Groceries,Weekly shop
+00001,2025-08-22,Amazon,-51.66,Other,Purchase
+00001,2025-08-23,Spotify,-81.97,Bills,Monthly bill
+00001,2025-08-23,Pizza Express,-29.03,Dining,Meal out
+00001,2025-08-23,Nando's,-18.97,Dining,Meal out
+00001,2025-08-26,British Gas,-28.58,Bills,Monthly bill
+00001,2025-08-26,Costa Coffee,-25.31,Dining,Meal out
+00001,2025-08-27,Vodafone,-18.92,Bills,Monthly bill
+00001,2025-08-29,Shell Petrol,-19.39,Transport,Travel
+00001,2025-09-01,Employer Ltd,1800.00,Income,Monthly salary
+00001,2025-09-01,Uber,-15.70,Transport,Travel
+00001,2025-09-03,Trainline,-11.11,Transport,Travel
+00001,2025-09-04,Costa Coffee,-22.85,Dining,Meal out
+00001,2025-09-08,National Express,-10.99,Transport,Travel
+00001,2025-09-08,Netflix,-37.88,Bills,Monthly bill
+00001,2025-09-12,Wagamama,-27.08,Dining,Meal out
+00001,2025-09-14,ASOS,-26.65,Other,Purchase
+00001,2025-09-17,National Express,-17.89,Transport,Travel
+00001,2025-09-18,British Gas,-43.75,Bills,Monthly bill
+00001,2025-09-18,British Gas,-18.44,Bills,Monthly bill
+00001,2025-09-19,Sainsbury's,-31.51,Groceries,Weekly shop
+00001,2025-09-19,IKEA,-58.52,Other,Purchase
+00001,2025-09-21,Shell Petrol,-17.73,Transport,Travel
+00001,2025-09-22,TfL,-4.54,Transport,Travel
+00001,2025-09-29,Aldi,-35.94,Groceries,Weekly shop
+00001,2025-10-01,Employer Ltd,1800.00,Income,Monthly salary
+00001,2025-10-02,Uber,-12.59,Transport,Travel
+00001,2025-10-05,Netflix,-67.21,Bills,Monthly bill
+00001,2025-10-09,IKEA,-6.99,Other,Purchase
+00001,2025-10-10,Sainsbury's,-25.93,Groceries,Weekly shop
+00001,2025-10-11,Boots,-51.01,Other,Purchase
+00001,2025-10-17,Sainsbury's,-30.97,Groceries,Weekly shop
+00001,2025-10-17,Vodafone,-60.90,Bills,Monthly bill
+00001,2025-10-21,TfL,-8.70,Transport,Travel
+00001,2025-10-21,Tesco,-18.36,Groceries,Weekly shop
+00001,2025-10-22,TfL,-7.91,Transport,Travel
+00001,2025-10-23,Uber,-16.70,Transport,Travel
+00001,2025-10-26,Morrisons,-39.36,Groceries,Weekly shop
+00001,2025-10-28,Uber,-18.89,Transport,Travel
+00001,2025-10-31,Uber,-9.19,Transport,Travel
+00001,2025-10-31,Spotify,-40.25,Bills,Monthly bill
+00001,2025-11-01,Employer Ltd,1800.00,Income,Monthly salary
+00001,2025-11-01,Netflix,-62.32,Bills,Monthly bill
+00001,2025-11-02,British Gas,-76.50,Bills,Monthly bill
+00001,2025-11-02,ASOS,-16.34,Other,Purchase
+00001,2025-11-03,TfL,-22.87,Transport,Travel
+00001,2025-11-04,Morrisons,-17.78,Groceries,Weekly shop
+00001,2025-11-04,Netflix,-27.11,Bills,Monthly bill
+00001,2025-11-05,Pizza Express,-16.68,Dining,Meal out
+00001,2025-11-05,Pizza Express,-17.46,Dining,Meal out
+00001,2025-11-05,Vodafone,-67.62,Bills,Monthly bill
+00001,2025-11-09,Nando's,-12.18,Dining,Meal out
+00001,2025-11-13,Uber,-6.45,Transport,Travel
+00001,2025-11-14,McDonald's,-16.89,Dining,Meal out
+00001,2025-11-14,Costa Coffee,-6.20,Dining,Meal out
+00001,2025-11-15,Shell Petrol,-23.22,Transport,Travel
+00001,2025-11-17,National Express,-16.51,Transport,Travel
+00001,2025-11-18,Costa Coffee,-10.12,Dining,Meal out
+00001,2025-11-19,IKEA,-45.55,Other,Purchase
+00001,2025-11-25,Trainline,-4.75,Transport,Travel
+00001,2025-11-26,Pizza Express,-4.01,Dining,Meal out
+00001,2025-11-27,Boots,-32.08,Other,Purchase
+00001,2025-11-28,ASOS,-46.19,Other,Purchase
+00001,2025-11-28,Aldi,-22.93,Groceries,Weekly shop
+00001,2025-12-01,Employer Ltd,1800.00,Income,Monthly salary
+00001,2025-12-01,Trainline,-19.70,Transport,Travel
+00001,2025-12-05,Vodafone,-45.78,Bills,Monthly bill
+00001,2025-12-05,Vodafone,-18.29,Bills,Monthly bill
+00001,2025-12-05,National Express,-15.81,Transport,Travel
+00001,2025-12-09,Wagamama,-20.93,Dining,Meal out
+00001,2025-12-11,Tesco,-12.94,Groceries,Weekly shop
+00001,2025-12-17,Amazon,-16.21,Other,Purchase
+00001,2025-12-17,Morrisons,-40.32,Groceries,Weekly shop
+00001,2025-12-19,IKEA,-56.69,Other,Purchase
+00001,2025-12-20,Nando's,-23.50,Dining,Meal out
+00001,2025-12-24,Netflix,-84.57,Bills,Monthly bill
+00001,2025-12-27,Thames Water,-53.74,Bills,Monthly bill
+00001,2025-12-29,Tesco,-14.59,Groceries,Weekly shop
+00001,2026-01-01,Employer Ltd,1800.00,Income,Monthly salary
+00001,2026-01-04,Lidl,-13.51,Groceries,Weekly shop
+00001,2026-01-05,Morrisons,-24.50,Groceries,Weekly shop
+00001,2026-01-05,Tesco,-37.91,Groceries,Weekly shop
+00001,2026-01-06,Lidl,-14.57,Groceries,Weekly shop
+00001,2026-01-06,Nando's,-23.18,Dining,Meal out
+00001,2026-01-08,Shell Petrol,-11.06,Transport,Travel
+00001,2026-01-18,Wagamama,-20.41,Dining,Meal out
+00001,2026-01-21,IKEA,-51.85,Other,Purchase
+00001,2026-01-24,Vodafone,-83.77,Bills,Monthly bill
+00001,2026-01-25,Morrisons,-34.15,Groceries,Weekly shop
+00001,2026-01-26,Shell Petrol,-10.38,Transport,Travel
+00001,2026-01-26,National Express,-19.95,Transport,Travel
+00001,2026-01-26,Pizza Express,-14.63,Dining,Meal out
+00001,2026-01-26,Shell Petrol,-19.20,Transport,Travel
+00001,2026-01-27,ASOS,-30.90,Other,Purchase
+00001,2026-01-28,Thames Water,-69.99,Bills,Monthly bill
+00001,2026-01-28,Costa Coffee,-28.27,Dining,Meal out
+00001,2026-02-01,Employer Ltd,1800.00,Income,Monthly salary
+00001,2026-02-02,IKEA,-23.54,Other,Purchase
+00001,2026-02-03,Vodafone,-68.28,Bills,Monthly bill
+00001,2026-02-05,Trainline,-5.12,Transport,Travel
+00001,2026-02-08,Amazon,-43.29,Other,Purchase
+00001,2026-02-09,Boots,-9.08,Other,Purchase
+00001,2026-02-09,National Express,-14.28,Transport,Travel
+00001,2026-02-10,Shell Petrol,-8.96,Transport,Travel
+00001,2026-02-11,Wagamama,-25.70,Dining,Meal out
+00001,2026-02-15,IKEA,-16.01,Other,Purchase
+00001,2026-02-23,McDonald's,-29.91,Dining,Meal out
+00001,2026-02-25,WHSmith,-26.36,Other,Purchase
+00001,2026-02-27,IKEA,-36.53,Other,Purchase
+00001,2026-02-27,National Express,-2.23,Transport,Travel
+00001,2026-03-01,Employer Ltd,1800.00,Income,Monthly salary
+00001,2026-03-04,Tesco,-36.69,Groceries,Weekly shop
+00001,2026-03-05,Shell Petrol,-8.98,Transport,Travel
+00001,2026-03-08,Trainline,-6.13,Transport,Travel
+00001,2026-03-08,McDonald's,-25.24,Dining,Meal out
+00001,2026-03-10,IKEA,-27.25,Other,Purchase
+00001,2026-03-10,IKEA,-23.25,Other,Purchase
+00001,2026-03-12,Aldi,-42.76,Groceries,Weekly shop
+00001,2026-03-13,Costa Coffee,-7.95,Dining,Meal out
+00001,2026-03-15,Vodafone,-82.27,Bills,Monthly bill
+00001,2026-03-16,Boots,-45.42,Other,Purchase
+00001,2026-03-16,Amazon,-34.95,Other,Purchase
+00001,2026-03-16,Netflix,-28.35,Bills,Monthly bill
+00001,2026-03-17,IKEA,-51.34,Other,Purchase
+00001,2026-03-17,Aldi,-30.17,Groceries,Weekly shop
+00001,2026-03-20,National Express,-2.54,Transport,Travel
+00001,2026-03-21,Lidl,-32.56,Groceries,Weekly shop
+00001,2026-03-23,Boots,-22.02,Other,Purchase
+00001,2026-03-31,Amazon,-29.13,Other,Purchase
+00001,2026-04-01,Employer Ltd,1800.00,Income,Monthly salary
+00001,2026-04-01,Uber,-3.54,Transport,Travel
+00001,2026-04-02,Tesco,-42.46,Groceries,Weekly shop
+00001,2026-04-03,Lidl,-11.72,Groceries,Weekly shop
+00001,2026-04-09,National Express,-6.41,Transport,Travel
+00001,2026-04-10,WHSmith,-6.07,Other,Purchase
+00001,2026-04-13,Morrisons,-33.01,Groceries,Weekly shop
+00001,2026-04-16,Trainline,-22.43,Transport,Travel
+00001,2026-04-16,Vodafone,-55.41,Bills,Monthly bill
+00001,2026-04-16,TfL,-22.35,Transport,Travel
+00001,2026-04-17,Thames Water,-54.28,Bills,Monthly bill
+00001,2026-04-18,Tesco,-39.42,Groceries,Weekly shop
+00001,2026-04-22,Vodafone,-29.02,Bills,Monthly bill
+00001,2026-04-23,Trainline,-8.83,Transport,Travel
+00001,2026-04-24,Spotify,-89.21,Bills,Monthly bill
+00001,2026-04-25,Aldi,-19.78,Groceries,Weekly shop
+00001,2026-04-25,TfL,-3.40,Transport,Travel
+00001,2026-04-25,Wagamama,-22.39,Dining,Meal out
+00001,2026-04-25,Costa Coffee,-18.65,Dining,Meal out
+00001,2026-04-25,WHSmith,-36.60,Other,Purchase
+00001,2026-04-26,Vodafone,-74.43,Bills,Monthly bill
+00001,2026-04-27,Nando's,-17.68,Dining,Meal out
+00001,2026-04-30,Aldi,-25.11,Groceries,Weekly shop
+00001,2026-04-30,TfL,-2.14,Transport,Travel
+00001,2026-05-01,Employer Ltd,1800.00,Income,Monthly salary
+00001,2026-05-01,WHSmith,-8.59,Other,Purchase
+00001,2026-05-01,Sainsbury's,-25.29,Groceries,Weekly shop
+00001,2026-05-02,Uber,-9.92,Transport,Travel
+00001,2026-05-02,Aldi,-17.92,Groceries,Weekly shop
+00001,2026-05-03,Pizza Express,-13.95,Dining,Meal out
+00001,2026-05-04,ASOS,-46.64,Other,Purchase
+00001,2026-05-05,Shell Petrol,-13.99,Transport,Travel
+00001,2026-05-11,Spotify,-57.25,Bills,Monthly bill
+00001,2026-05-11,Morrisons,-30.93,Groceries,Weekly shop
+00001,2026-05-13,TfL,-7.55,Transport,Travel
+00001,2026-05-13,Nando's,-28.08,Dining,Meal out
+00001,2026-05-15,Trainline,-5.41,Transport,Travel
+00001,2026-05-22,Vodafone,-13.83,Bills,Monthly bill
+00001,2026-05-28,Pizza Express,-19.73,Dining,Meal out
+00001,2026-05-29,Lidl,-20.68,Groceries,Weekly shop
+00001,2026-06-01,Employer Ltd,1800.00,Income,Monthly salary
+00001,2026-06-02,WHSmith,-28.25,Other,Purchase
+00001,2026-06-03,Boots,-20.49,Other,Purchase
+00001,2026-06-04,Tesco,-42.51,Groceries,Weekly shop
+00001,2026-06-05,WHSmith,-54.86,Other,Purchase
+00001,2026-06-07,Uber,-7.95,Transport,Travel
+00001,2026-06-07,National Express,-13.85,Transport,Travel
+00001,2026-06-08,Aldi,-17.56,Groceries,Weekly shop
+00001,2026-06-11,Thames Water,-24.98,Bills,Monthly bill
+00001,2026-06-13,ASOS,-47.88,Other,Purchase
+00001,2026-06-14,Amazon,-6.71,Other,Purchase
+00001,2026-06-14,Aldi,-9.86,Groceries,Weekly shop
+00001,2026-06-15,Amazon,-23.27,Other,Purchase
+00001,2026-06-16,Aldi,-16.20,Groceries,Weekly shop
+00001,2026-06-18,Netflix,-55.27,Bills,Monthly bill
+00001,2026-06-19,TfL,-13.36,Transport,Travel
+00001,2026-06-21,National Express,-17.78,Transport,Travel
+00001,2026-06-22,Sainsbury's,-16.14,Groceries,Weekly shop
+00001,2026-06-24,TfL,-10.99,Transport,Travel
+00001,2026-06-24,Shell Petrol,-4.31,Transport,Travel
+00001,2026-06-24,Wagamama,-18.35,Dining,Meal out
+00001,2026-06-27,Amazon,-27.52,Other,Purchase
+00001,2026-06-28,Vodafone,-21.08,Bills,Monthly bill
+00001,2026-06-29,Spotify,-84.79,Bills,Monthly bill
+00001,2026-07-01,Employer Ltd,1800.00,Income,Monthly salary
+00001,2026-07-03,ASOS,-43.98,Other,Purchase
+00001,2026-07-04,Wagamama,-19.23,Dining,Meal out
+00001,2026-07-04,Nando's,-11.18,Dining,Meal out
+00001,2026-07-04,Costa Coffee,-24.16,Dining,Meal out
+00001,2026-07-10,Lidl,-12.73,Groceries,Weekly shop
+00001,2026-07-10,National Express,-24.77,Transport,Travel
+00001,2026-07-11,Aldi,-20.53,Groceries,Weekly shop
