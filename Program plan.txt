@@ -1,0 +1,10 @@
+Program plan
+
+Import data
+
+Create a customisable sorting algorithm, that can sort the data based on any field entered
+i.e Lowest to highest transactions, Alphabetical company names, Latest to oldest transaction dates
+
+Create a filtering algorithm that filters data based on any field requested
+i.e Filter by date (July 2025 - September 2025), Filter price within a given range
+

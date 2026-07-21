@@ -49,7 +49,51 @@ def load_transactions(filename):
                 "Description" : row["Description"]
             })
 load_transactions("transactions.csv")
-print(transactions_list[0])
-print
+
+#--------- Merge Sort (generic, sorts by any key) -----------
+def merge_sort(data, key):     #'key' is a function that extracts the value to compare
+    #e.g. key=lambda x: x["Amount"]
+
+    #Sorts a list of dictionaries using merge sort.
+    
+    if len(data) <= 1:
+        return data  # Base case: a list of 0 or 1 items is already sorted
+
+    mid = len(data) // 2
+    left_half = data[:mid]
+    right_half = data[mid:]
+
+    # Recursively split both halves
+    left_sorted = merge_sort(left_half, key)
+    right_sorted = merge_sort(right_half, key)
+
+    # Merge the two sorted halves together
+    return merge(left_sorted, right_sorted, key)
 
 
+def merge(left, right, key):
+    merged = []
+    i = j = 0  # Pointers into left and right lists
+
+    while i < len(left) and j < len(right):
+        if key(left[i]) <= key(right[j]):
+            merged.append(left[i])
+            i += 1
+        else:
+            merged.append(right[j])
+            j += 1
+
+    # Append any leftover items (one side will still have items left)
+    merged.extend(left[i:])
+    merged.extend(right[j:])
+
+    return merged
+
+# Sort transactions by Date
+transactions_by_date = merge_sort(transactions_list, key=lambda t: t["Date"])
+
+# Sort transactions by Amount
+transactions_by_amount = merge_sort(transactions_list, key=lambda t: t["Amount"])
+
+# Sort budgets by Category
+budgets_by_category = merge_sort(budgets_list, key=lambda b: b["Category"])
