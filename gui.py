@@ -38,6 +38,34 @@ class LedgerWiseApp:
 
         self.configure_styles()
 
+        # Show the welcome screen first; the tabbed interface is only built
+        # once the user clicks "Get Started" (see start_app()).
+        self.build_welcome_screen()
+
+    def build_welcome_screen(self):
+        # A simple landing screen shown before the main app: app name,
+        # tagline, and a button to enter the tabbed interface. Kept as its
+        # own frame so it can be destroyed cleanly in start_app().
+        self.welcome_frame = ttk.Frame(self.root)
+        self.welcome_frame.pack(fill="both", expand=True)
+
+        # Centred content, regardless of window size
+        center_frame = ttk.Frame(self.welcome_frame)
+        center_frame.place(relx=0.5, rely=0.5, anchor="center")
+
+        ttk.Label(center_frame, text="LedgerWise", font=("Segoe UI", 32, "bold"),
+                foreground="#2e7d32").pack(pady=(0, 8))
+        ttk.Label(center_frame, text="Track. Budget. Forecast.",
+                font=("Segoe UI", 13), foreground="#5f6b5f").pack(pady=(0, 30))
+
+        ttk.Button(center_frame, text="Get Started",
+                command=self.start_app).pack(ipadx=14, ipady=6)
+
+    def start_app(self):
+        # Called when "Get Started" is clicked: removes the welcome screen
+        # and builds the real tabbed interface in its place.
+        self.welcome_frame.destroy()
+
         self.notebook = ttk.Notebook(self.root)
         self.notebook.pack(fill="both", expand=True)
 

@@ -485,13 +485,3 @@ def load_budget(filename): # Loads budgets from a CSV file into a list of dictio
         raise DataLoadError(f"Could not find file '{filename}'. Check the file path and try again.")
 
     return loaded_budgets
-
-
-#  Command-line entry point (only runs when this file is executed directly
-def main():
-    accounts_list, budgets_list, transactions_list = load_all_data(
-        "accounts.csv", "budgets.csv", "transactions.csv"
-    )
-
-if __name__ == "__main__":
-    main()
