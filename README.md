@@ -1,36 +1,74 @@
-# Final-intro-to-programming-project
+# LedgerWise
 
-## Project Description
+**Personal Finance Tracker, Budgeter & Forecaster**
 
-A personal finance tracking and budgeting application. The user maintains one account (Checking) and records transactions used with it, each tagged with a category and optional notes. Transactions can be entered manually through the interface or imported in bulk from a CSV file. The program sorts and searches transaction records using a custom-built sorting algorithm and binary search, allowing the user to quickly view spending within a given date range or filter by category. Budgets can be set per category, and the application uses a simple rule-based method to forecast whether the user is on track to stay within budget based on their recent spending pattern. The application includes a graphical interface with a dashboard of data visualisations, such as spending by category and spending trends over time, and all account, transaction, and budget data is saved to and loaded from CSV files so a user's data persists between sessions.
+## Identifying Information
 
-## Introduction
+| | |
+|---|---|
+| **Name** | Emmanuel Mugaine |
+| **P-Number** | P509970 |
+| **Student ID Number** | 303065252 |
+| **Course Code** | IY499 — Introduction to Programming |
+| **Assessment** | Practical Programming Assignment |
 
-I intend to create a Personal Finance Manager programme using python. The programme will read data from a CSV file and place the values into different categories such as income and expenses. From this, various charts and graphs will be displayed showing the trend of expendature of the user along wth predicting whether the user will be above or below their allocated budget category
+## Declaration of Own Work
 
-I am making the assumption that the programm is being used by an admin and as such they have access to all the user details and can view individual user accounts
+**I confirm that this assignment is my own work.**
+**Where I have referred to online sources, I have provided comments detailing the reference and included a link to the source.**
 
-## Features to be implemented
+## Description
 
-### Data Visualisation
+LedgerWise is a desktop personal finance application built in Python with a Tkinter graphical interface. It tracks income and expenses from a single checking account, compares actual spending against a per-category monthly budget, and provides a simple rule-based forecast of whether the user is on track to stay within budget by the end of the current month.
 
-Using matplotlib in tkinter to visualise spending over time (line graph), Spending per category (pie/bar charts) and budget vs actual amount (pie chart)
+The application loads account, budget, and transaction data from three CSV files at startup, and presents everything through four tabs: a Dashboard summarising income, expenses, net cashflow, and at-risk budget categories for a selectable month; a Transactions tab with a sortable, searchable table of every transaction; a Budgets tab showing spend-vs-budget progress bars per category; and a Reports tab with a pie chart of spending by category, again filterable by month.
 
-### GUI
+Under the hood, LedgerWise uses a custom-written merge sort to order transactions by date or amount, a binary search to find all transactions on an exact date, and a linear search to find transactions by partial company name or description text. Budget comparisons and the month-end forecast are calculated on demand from the loaded transaction data, rather than stored separately, to avoid the figures ever falling out of sync with the underlying transactions.
 
-Using tkinter to create a login page, dashboard and tabs to cycle through
+A short splash screen introduces the application before the main window opens. All data loading is validated on startup — missing files, incorrect columns, and malformed rows are caught and reported clearly rather than allowed to silently corrupt calculations or crash with a raw Python traceback.
 
-### File I/O
+## Packages / Libraries Used
 
-Importing user transaction files as a CSV file
+- **matplotlib** — renders the spending-by-category pie chart, embedded in the Tkinter window via `matplotlib.backends.backend_tkagg`
+- **tkinter** (Python standard library) — the graphical user interface
+- **csv** (Python standard library) — reading the accounts, budgets, and transactions CSV files
+- **datetime / calendar** (Python standard library) — date parsing, comparison, and days-in-month calculations for forecasting
 
-### Searching and Sorting
+*A full pinned list of dependencies is provided in `requirements.txt`.*
 
-Implementing a searching and sorting algorithm to sort the user transactions read from the CSV in terms of date/name/balance
-I will also implement a way for the user to choose which field to sort by
+## Installation Instructions
 
-### Error Handling
+1. Ensure Python 3.10 or later is installed. It is available via the university Software Centre, or free from [python.org](https://www.python.org) for personal machines.
 
-I will include data verification and input sanitation to prevent erroneous user input values
-FileNotFound errors will be addressed
-CSV parsing errors will be addressed
+2. Download or clone the repository:
+   ```
+   git clone https://github.com/EmmanuelMugaine/IY499-Final-intro-to-programming-project.git
+   ```
+
+3. Install the required package:
+   ```
+   pip install -r requirements.txt
+   ```
+
+## Instructions on How to Run the Program
+
+1. Make sure `accounts.csv`, `budgets.csv`, and `transactions.csv` are present in the same folder as `gui.py`.
+
+2. Run the application from the project folder:
+   ```
+   python gui.py
+   ```
+
+3. Click **"Continue"** on the welcome screen to open the main application.
+
+4. Use the tabs across the top (**Dashboard**, **Transactions**, **Budgets**, **Reports**) to navigate. Most tabs include a month dropdown to change which period is displayed.
+
+*Note: `ledgerwise.py` can also be run directly (`python ledgerwise.py`) to execute the core logic from the command line without the GUI — useful for testing the sorting, searching, and budget logic in isolation.*
+
+## Repository Link
+
+*https://github.com/EmmanuelMugaine/IY499-Final-intro-to-programming-project.git*
+
+## Referencing
+
+Any code adapted from an external source (e.g. official Python or matplotlib documentation, Stack Overflow) is marked with an inline comment at the point of use, giving a brief description and a link to the original source, per the module's referencing requirements.
