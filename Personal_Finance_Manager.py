@@ -1,60 +1,155 @@
 import csv  #For dictreader and dictwriter
 from datetime import date, datetime #Converting string date values into actual dates
 import sys 
+#Imports for the window and the dashboard tabs
+import tkinter as tk
+from tkinter import ttk
 
-#--------- Opening and storing the Accounts csv file ------------
-accounts_list = []
-def load_accounts(filename):    #Reusable function to open any account file
-    with open(filename , "r", newline= "") as accounts:
-        account_reader = csv.DictReader(accounts)   #Storing file values as dictionaries
-        for row in account_reader:
-            accounts_list.append({
-                "Account ID" : row["Account ID"],
-                "Account Name" : row["Account Name"]
-            })
+class DataLoadError(Exception):
+    # Custom exception for problems loading App data files.
+    pass
+
+#Loading CSV data with Error Handling
+
+def load_accounts(filename):
+
+    #Loads accounts from a CSV file into a list of dictionaries.
+    #Raises DataLoadError with a clear message if the file is missing,
+    #has the wrong columns, or contains a malformed row.
+
+    expected_columns = {"Account ID", "Account Name"}
+    loaded_accounts = []
+
+    try:
+        with open(filename, "r", newline="") as accounts:
+            account_reader = csv.DictReader(accounts)
+
+            actual_columns = set(account_reader.fieldnames or [])
+            if actual_columns != expected_columns:
+                missing = expected_columns - actual_columns
+                unexpected = actual_columns - expected_columns
+                raise DataLoadError(
+                    f"'{filename}' has incorrect columns. "
+                    f"Missing: {missing or 'none'}. Unexpected: {unexpected or 'none'}."
+                )
+
+            for row_number, row in enumerate(account_reader, start=2):
+                try:
+                    if not row["Account ID"].strip():
+                        raise ValueError("Account ID cannot be empty")
+                    if not row["Account Name"].strip():
+                        raise ValueError("Account Name cannot be empty")
+
+                    loaded_accounts.append({
+                        "Account ID": row["Account ID"],
+                        "Account Name": row["Account Name"]
+                    })
+                except ValueError as e:
+                    raise DataLoadError(
+                        f"'{filename}', row {row_number}: invalid data ({e}). "
+                        f"Row contents: {row}"
+                    )
+
+    except FileNotFoundError:
+        raise DataLoadError(f"Could not find file '{filename}'. Check the file path and try again.")
+
+    return loaded_accounts
 
 
-budgets_list = []
-#--------- Opening and storing the Budget csv file -------------
 def load_budget(filename):
-    with open(filename , "r", newline= "") as budget:
-        budget_reader = csv.DictReader(budget)
-    #Storing and Editing values to their appropriate data types
-        for row in budget_reader:
-            budgets_list.append({
-                "Account ID" : row["Account ID"],
-                "Category" : row["Category"],
-                "Budget Amount" : float(row["Budget Amount"])
-            })
 
+    #Loads budgets from a CSV file into a list of dictionaries.
+    #Raises DataLoadError with a clear message if the file is missing,
+    #has the wrong columns, or contains a malformed row.
 
-transactions_list = []
-#--------- Opening and storing the transactions csv file --------------
+    expected_columns = {"Account ID", "Category", "Budget Amount"}
+    loaded_budgets = []
+
+    try:
+        with open(filename, "r", newline="") as budget:
+            budget_reader = csv.DictReader(budget)
+
+            actual_columns = set(budget_reader.fieldnames or [])
+            if actual_columns != expected_columns:
+                missing = expected_columns - actual_columns
+                unexpected = actual_columns - expected_columns
+                raise DataLoadError(
+                    f"'{filename}' has incorrect columns. "
+                    f"Missing: {missing or 'none'}. Unexpected: {unexpected or 'none'}."
+                )
+
+            for row_number, row in enumerate(budget_reader, start=2):
+                try:
+                    budget_amount = float(row["Budget Amount"])
+                    if budget_amount < 0:
+                        raise ValueError("Budget Amount cannot be negative")
+
+                    loaded_budgets.append({
+                        "Account ID": row["Account ID"],
+                        "Category": row["Category"],
+                        "Budget Amount": budget_amount
+                    })
+                except ValueError as e:
+                    raise DataLoadError(
+                        f"'{filename}', row {row_number}: invalid data ({e}). "
+                        f"Row contents: {row}"
+                    )
+
+    except FileNotFoundError:
+        raise DataLoadError(f"Could not find file '{filename}'. Check the file path and try again.")
+
+    return loaded_budgets
+
 def load_transactions(filename):
-    #Opening
-    with open(filename , "r", newline= "") as transactions:
-        transaction_reader = csv.DictReader(transactions)
-    #Storing and Editing values to their appropriate data types
-        for row in transaction_reader:  #Iterating the values in the reader
-            transactions_list.append({ #Storing the values into the empty list created outside
-                "Account ID" : row["Account ID"],
-                "Date" : datetime.strptime( #Formatting date into YYYY-MM-DD
-                row["Date"],
-                "%Y-%m-%d"
-                ).date(),
-                "Company Name" : row["Company Name"],
-                "Amount" : float(row["Amount"]),    #Formatting date into floats
-                "Category" : row["Category"],
-                "Description" : row["Description"]
-            })
+    """
+    Loads transactions from a CSV file into a list of dictionaries.
+    Raises DataLoadError with a clear message if the file is missing,
+    has the wrong columns, or contains a malformed row.
+    """
+    expected_columns = {"Account ID", "Date", "Company Name", "Amount", "Category", "Description"}
+    loaded_transactions = []
+
+    try:
+        with open(filename, "r", newline="") as transactions:
+            transaction_reader = csv.DictReader(transactions)
+
+            # Check the header row matches what we expect BEFORE reading any data
+            actual_columns = set(transaction_reader.fieldnames or [])
+            if actual_columns != expected_columns:
+                missing = expected_columns - actual_columns
+                unexpected = actual_columns - expected_columns
+                raise DataLoadError(
+                    f"'{filename}' has incorrect columns. "
+                    f"Missing: {missing or 'none'}. Unexpected: {unexpected or 'none'}."
+                )
+
+            # enumerate starts at 2 because row 1 is the header
+            for row_number, row in enumerate(transaction_reader, start=2):
+                try:
+                    loaded_transactions.append({
+                        "Account ID": row["Account ID"],
+                        "Date": datetime.strptime(row["Date"], "%Y-%m-%d").date(),
+                        "Company Name": row["Company Name"],
+                        "Amount": float(row["Amount"]),
+                        "Category": row["Category"],
+                        "Description": row["Description"]
+                    })
+                except ValueError as e:
+                    raise DataLoadError(
+                        f"'{filename}', row {row_number}: invalid data ({e}). "
+                        f"Row contents: {row}"
+                    )
+
+    except FileNotFoundError:
+        raise DataLoadError(f"Could not find file '{filename}'. Check the file path and try again.")
+
+    return loaded_transactions
 
 def load_all_data(accounts_file, budgets_file, transactions_file):
-    """
-    Loads all three LedgerWise data files together.
-    If any file fails to load, prints a clear error and exits the program
-    cleanly rather than crashing with a raw traceback.
-    Returns (accounts_list, budgets_list, transactions_list) on success.
-    """
+    #Loads all three LedgerWise data files together.
+    #If any file fails to load, prints a clear error and exits the program
+    #cleanly rather than crashing with a raw traceback.
+    #Returns (accounts_list, budgets_list, transactions_list) on success.
     try:
         accounts_list = load_accounts(accounts_file)
         budgets_list = load_budget(budgets_file)
@@ -64,10 +159,6 @@ def load_all_data(accounts_file, budgets_file, transactions_file):
         sys.exit(1)  # Exit with a non-zero code to signal failure
 
     return accounts_list, budgets_list, transactions_list
-
-accounts_list, budgets_list, transactions_list = load_all_data(
-    "accounts.csv", "budgets.csv", "transactions.csv"
-)
 
 
 #--------- Merge Sort (generic, sorts by any key) -----------
@@ -109,14 +200,6 @@ def merge(left, right, key):
 
     return merged
 
-# Sort transactions by Date
-transactions_by_date = merge_sort(transactions_list, key=lambda t: t["Date"])
-
-# Sort transactions by Amount
-transactions_by_amount = merge_sort(transactions_list, key=lambda t: t["Amount"])
-
-# Sort budgets by Category
-budgets_by_category = merge_sort(budgets_list, key=lambda b: b["Category"])
 
 #--------- Binary Search (generic, searches by any key) -----------
 #Displays all transactions if sorted by date
@@ -162,18 +245,6 @@ def binary_search(sorted_data, target, key):
 
     return results
 
-#Because the transaction by date is sorted earlier it is safe to search now
-#Target date to find in the data set
-target_date = datetime.strptime("2026-06-15", "%Y-%m-%d").date()
-#Inputting target date into function
-same_day_transactions = binary_search(transactions_by_date, target_date, key=lambda t: t["Date"])
-
-if same_day_transactions:
-    print(f"Found {len(same_day_transactions)} transaction(s) on {target_date}:")
-    for t in same_day_transactions:
-        print(f"  {t['Company Name']} - £{t['Amount']} ({t['Category']})")
-else:
-    print("No transactions found on that date.")
 
 #--------- Budget Tracking Logic -----------
     #Compares actual spending against budgeted amounts, grouped by
@@ -407,3 +478,40 @@ def load_budget(filename):
         raise DataLoadError(f"Could not find file '{filename}'. Check the file path and try again.")
 
     return loaded_budgets
+
+
+#  Command-line entry point (only runs when this file is executed directly
+def main():
+    accounts_list, budgets_list, transactions_list = load_all_data(
+        "accounts.csv", "budgets.csv", "transactions.csv"
+    )
+
+    # Sort transactions by Date
+    transactions_by_date = merge_sort(transactions_list, key=lambda t: t["Date"])
+
+    # Sort transactions by Amount
+    transactions_by_amount = merge_sort(transactions_list, key=lambda t: t["Amount"])
+
+    # Sort budgets by Category
+    budgets_by_category = merge_sort(budgets_list, key=lambda b: b["Category"])
+
+    # Because transactions_by_date is sorted, it is safe to binary search now
+    target_date = datetime.strptime("2026-06-15", "%Y-%m-%d").date()
+    same_day_transactions = binary_search(transactions_by_date, target_date, key=lambda t: t["Date"])
+
+    if same_day_transactions:
+        print(f"Found {len(same_day_transactions)} transaction(s) on {target_date}:")
+        for t in same_day_transactions:
+            print(f"  {t['Company Name']} - £{t['Amount']} ({t['Category']})")
+    else:
+        print("No transactions found on that date.")
+
+    status = track_budgets(transactions_list, budgets_list)
+    forecast = forecast_budgets(status)
+    for entry in forecast:
+        if entry["Projected Over Budget"]:
+            print(f" {entry['Category']} ({entry['Month']}): projected £{entry['Projected Total']} "
+                f"vs budget £{entry['Budgeted']}")
+
+if __name__ == "__main__":
+    main()
