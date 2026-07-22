@@ -271,13 +271,13 @@ def track_budgets(transactions, budgets):    #Returns a list of dictionaries sum
 
     for t in transactions:
         # Only track spending (negative amounts / expenses)
-        # Adjust this check depending on how you store expenses vs income
-        year_month = t["Date"].strftime("%Y-%m")
-        group_key = (t["Account ID"], t["Category"], year_month)
+        if t["Amount"] < 0:
+            year_month = t["Date"].strftime("%Y-%m")
+            group_key = (t["Account ID"], t["Category"], year_month)
 
-        if group_key not in spending:
-            spending[group_key] = 0.0
-        spending[group_key] += t["Amount"]
+            if group_key not in spending:
+                spending[group_key] = 0.0
+            spending[group_key] += abs(t["Amount"])
 
     # Step 2: Compare each budget entry against the grouped spending
     budget_status = []

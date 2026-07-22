@@ -250,9 +250,102 @@ class LedgerWiseApp:
         self.populate_transaction_table(sorted_transactions)
 
     def build_budgets_tab(self):
-        """Placeholder content for the Budgets tab."""
-        label = ttk.Label(self.budgets_tab, text="Budgets — progress bars will go here", font=("Arial", 14))
-        label.pack(pady=20)
+        """
+        Builds the Budgets tab: a dropdown to pick a month, and one
+        progress bar per category showing amount spent vs budget.
+        """
+        # --- Work out which months have budget data, most recent first ---
+        # Uses track_budgets() so this only lists months that actually
+        # have spending recorded against a budgeted category.
+        status = track_budgets(self.transactions_list, self.budgets_list)
+        months_with_data = sorted({entry["Month"] for entry in status}, reverse=True)
+
+        if not months_with_data:
+            ttk.Label(self.budgets_tab, text="No budget data available.",
+                      font=("Arial", 14)).pack(pady=20)
+            return
+
+        # --- Controls row: label + dropdown (same pattern as Reports tab) ---
+        controls_frame = ttk.Frame(self.budgets_tab)
+        controls_frame.pack(pady=(20, 10))
+
+        ttk.Label(controls_frame, text="Month:", font=("Arial", 11)).pack(side="left", padx=(0, 8))
+
+        self.budget_selected_month = tk.StringVar(value=months_with_data[0])
+        month_dropdown = ttk.Combobox(
+            controls_frame,
+            textvariable=self.budget_selected_month,
+            values=months_with_data,
+            state="readonly",
+            width=10
+        )
+        month_dropdown.pack(side="left")
+        month_dropdown.bind("<<ComboboxSelected>>", lambda event: self.draw_budget_bars())
+
+        # --- Frame that will hold the progress bars, rebuilt on each redraw ---
+        self.budget_bars_frame = ttk.Frame(self.budgets_tab)
+        self.budget_bars_frame.pack(fill="both", expand=True, padx=20, pady=10)
+
+        self.draw_budget_bars()
+
+    def draw_budget_bars(self):
+        """
+        Draws (or redraws) one row per category for the selected month,
+        each with a progress bar showing amount spent vs budget, and
+        the remaining amount as text.
+        """
+        # Clear any previously drawn rows before redrawing
+        for widget in self.budget_bars_frame.winfo_children():
+            widget.destroy()
+
+        selected_month = self.budget_selected_month.get()
+
+        status = track_budgets(self.transactions_list, self.budgets_list)
+        month_entries = [entry for entry in status if entry["Month"] == selected_month]
+
+        # Sort categories alphabetically so the row order doesn't jump
+        # around when switching between months
+        month_entries = merge_sort(month_entries, key=lambda e: e["Category"])
+
+        if not month_entries:
+            ttk.Label(self.budget_bars_frame, text=f"No budgeted spending recorded for {selected_month}.",
+                      font=("Arial", 12)).pack(pady=20)
+            return
+
+        for entry in month_entries:
+            row_frame = ttk.Frame(self.budget_bars_frame)
+            row_frame.pack(fill="x", pady=6)
+
+            # Category name + remaining amount label
+            label_frame = ttk.Frame(row_frame)
+            label_frame.pack(fill="x")
+
+            ttk.Label(label_frame, text=entry["Category"], font=("Arial", 11, "bold")).pack(side="left")
+
+            if entry["Remaining"] >= 0:
+                remaining_text = f"£{entry['Remaining']:.2f} left"
+                remaining_colour = "green"
+            else:
+                remaining_text = f"£{abs(entry['Remaining']):.2f} over"
+                remaining_colour = "red"
+
+            ttk.Label(label_frame, text=f"£{entry['Spent']:.2f} / £{entry['Budgeted']:.2f}   ({remaining_text})",
+                    foreground=remaining_colour).pack(side="right")
+
+            # Progress bar — capped at 100 so overspending doesn't overflow the widget,
+            # colour communicates the over-budget state instead
+            progress_value = min(entry["Percent Used"], 100)
+            style_name = f"{entry['Category']}.Horizontal.TProgressbar"
+
+            style = ttk.Style()
+            bar_colour = "red" if entry["Over Budget"] else "green"
+            style.configure(style_name, troughcolor="#e0e0e0", background=bar_colour)
+
+            progress_bar = ttk.Progressbar(
+                row_frame, style=style_name, orient="horizontal",
+                length=400, mode="determinate", value=progress_value
+            )
+            progress_bar.pack(fill="x", pady=(2, 0))
 
     def build_reports_tab(self):
         # Builds the Reports tab: a pie chart of spending by category,
