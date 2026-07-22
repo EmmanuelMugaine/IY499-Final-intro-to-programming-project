@@ -1,8 +1,10 @@
-# ------------ gui.py -----------
+"""
+gui.py
 
-#The Tkinter GUI for LedgerWise. Contains only widget/display logic —
-#all data loading and calculations are imported from Personal_Finance_Manager.py so
-#this file stays focused on presentation.
+The Tkinter GUI for LedgerWise. Contains only widget/display logic —
+all data loading and calculations are imported from ledgerwise.py so
+this file stays focused on presentation.
+"""
 
 import tkinter as tk
 from tkinter import ttk
@@ -11,7 +13,14 @@ from datetime import date
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-from Personal_Finance_Manager import load_all_data, track_budgets, forecast_budgets
+from Personal_Finance_Manager import (
+    load_all_data,
+    track_budgets,
+    forecast_budgets,
+    merge_sort,
+    binary_search,
+    linear_search,
+)
 
 
 class LedgerWiseApp:
@@ -34,7 +43,7 @@ class LedgerWiseApp:
         self.transactions_tab = ttk.Frame(self.notebook)
         self.budgets_tab = ttk.Frame(self.notebook)
         self.reports_tab = ttk.Frame(self.notebook)
-    #Creating the dashboards
+
         self.notebook.add(self.dashboard_tab, text="Dashboard")
         self.notebook.add(self.transactions_tab, text="Transactions")
         self.notebook.add(self.budgets_tab, text="Budgets")
@@ -52,8 +61,6 @@ class LedgerWiseApp:
         current_month = date.today().strftime("%Y-%m")
 
         # --- Calculate this month's totals from transactions_list ---
-        #This is done to allow for better flexibility rather than a
-        #Hard coded value in the table
         income = 0.0
         expenses = 0.0
         for t in self.transactions_list:
@@ -102,16 +109,150 @@ class LedgerWiseApp:
             ttk.Label(self.dashboard_tab, text="No categories currently at risk.", foreground="green").pack(padx=40)
 
     def build_transactions_tab(self):
-        """Placeholder content for the Transactions tab."""
-        label = ttk.Label(self.transactions_tab, text="Transactions — table will go here", font=("Arial", 14))
-        label.pack(pady=20)
+        # Builds the Transactions tab: a Treeview table of all transactions,
+        # with column-header sorting (merge sort) and two search boxes —
+        # an exact date lookup (binary search) and a free-text search
+        # across Company Name / Description (linear search).
+
+        # --- Search controls row ---
+        controls_frame = ttk.Frame(self.transactions_tab)
+        controls_frame.pack(fill="x", padx=10, pady=(10, 5))
+
+        # Date search (binary search — needs an exact YYYY-MM-DD match)
+        ttk.Label(controls_frame, text="Find date (YYYY-MM-DD):").grid(row=0, column=0, padx=(0, 5))
+        self.date_search_var = tk.StringVar()
+        date_entry = ttk.Entry(controls_frame, textvariable=self.date_search_var, width=12)
+        date_entry.grid(row=0, column=1, padx=(0, 5))
+        ttk.Button(controls_frame, text="Go", command=self.search_by_date).grid(row=0, column=2, padx=(0, 20))
+
+        # Text search (linear search — partial match on Company Name / Description)
+        ttk.Label(controls_frame, text="Search company/description:").grid(row=0, column=3, padx=(0, 5))
+        self.text_search_var = tk.StringVar()
+        text_entry = ttk.Entry(controls_frame, textvariable=self.text_search_var, width=20)
+        text_entry.grid(row=0, column=4, padx=(0, 5))
+        ttk.Button(controls_frame, text="Go", command=self.search_by_text).grid(row=0, column=5, padx=(0, 20))
+
+        ttk.Button(controls_frame, text="Show All", command=self.reset_transaction_table).grid(row=0, column=6)
+
+        # --- Status label (row count / search feedback) ---
+        self.transactions_status_var = tk.StringVar()
+        ttk.Label(self.transactions_tab, textvariable=self.transactions_status_var,
+                foreground="grey").pack(anchor="w", padx=10)
+
+        # --- Table ---
+        columns = ("Date", "Company Name", "Amount", "Category", "Description")
+        self.transactions_tree = ttk.Treeview(
+            self.transactions_tab, columns=columns, show="headings", height=18
+        )
+
+        for col in columns:
+            # Only Date and Amount are sortable, per the brief's chosen scope.
+            if col in ("Date", "Amount"):
+                self.transactions_tree.heading(
+                    col, text=col, command=lambda c=col: self.sort_transaction_table(c)
+                )
+            else:
+                self.transactions_tree.heading(col, text=col)
+
+        self.transactions_tree.column("Date", width=100, anchor="center")
+        self.transactions_tree.column("Company Name", width=160)
+        self.transactions_tree.column("Amount", width=90, anchor="e")
+        self.transactions_tree.column("Category", width=110)
+        self.transactions_tree.column("Description", width=220)
+
+        self.transactions_tree.pack(fill="both", expand=True, padx=10, pady=(0, 10))
+
+        # Show every transaction initially, sorted by Date
+        self.reset_transaction_table()
+
+    def populate_transaction_table(self, transactions):
+        """
+        Clears the Treeview and refills it with the given list of
+        transaction dictionaries, in the order given.
+        """
+        self.transactions_tree.delete(*self.transactions_tree.get_children())
+
+        for t in transactions:
+            self.transactions_tree.insert("", "end", values=(
+                t["Date"].strftime("%Y-%m-%d"),
+                t["Company Name"],
+                f"£{t['Amount']:.2f}",
+                t["Category"],
+                t["Description"],
+            ))
+
+        self.transactions_status_var.set(f"Showing {len(transactions)} transaction(s)")
+
+    def sort_transaction_table(self, column):
+        """
+        Sorts the currently displayed transactions by the clicked
+        column, using the custom merge_sort algorithm, and redraws
+        the table.
+        """
+        key_functions = {
+            "Date": lambda t: t["Date"],
+            "Amount": lambda t: t["Amount"],
+        }
+        sorted_transactions = merge_sort(self.transactions_list, key=key_functions[column])
+        self.transactions_list = sorted_transactions  # keep sort order for future searches too
+        self.populate_transaction_table(sorted_transactions)
+
+    def search_by_date(self):
+        """
+        Looks up an exact date using binary search. Requires the data
+        to be sorted by Date first, so we sort immediately before
+        searching (cheap for this dataset size, and guarantees
+        correctness regardless of whatever order the table was in).
+        """
+        date_text = self.date_search_var.get().strip()
+        try:
+            target_date = date.fromisoformat(date_text)
+        except ValueError:
+            self.transactions_status_var.set(
+                f"'{date_text}' is not a valid date — use YYYY-MM-DD."
+            )
+            return
+
+        sorted_by_date = merge_sort(self.transactions_list, key=lambda t: t["Date"])
+        matches = binary_search_all(sorted_by_date, target_date, key=lambda t: t["Date"])
+
+        self.populate_transaction_table(matches)
+        if not matches:
+            self.transactions_status_var.set(f"No transactions found on {target_date}.")
+
+    def search_by_text(self):
+        """
+        Searches Company Name and Description for the given text
+        using linear search (no sorting required — text fields
+        aren't suited to exact-match binary search).
+        """
+        search_text = self.text_search_var.get().strip()
+        if not search_text:
+            self.reset_transaction_table()
+            return
+
+        company_matches = linear_search(self.transactions_list, search_text, key=lambda t: t["Company Name"])
+        description_matches = linear_search(self.transactions_list, search_text, key=lambda t: t["Description"])
+
+        # Combine without duplicating transactions that match both fields
+        combined = company_matches + [t for t in description_matches if t not in company_matches]
+
+        self.populate_transaction_table(combined)
+        if not combined:
+            self.transactions_status_var.set(f"No transactions matching '{search_text}'.")
+
+    def reset_transaction_table(self):
+        """Clears search boxes and shows every transaction, sorted by Date."""
+        self.date_search_var.set("")
+        self.text_search_var.set("")
+        sorted_transactions = merge_sort(self.transactions_list, key=lambda t: t["Date"])
+        self.transactions_list = sorted_transactions
+        self.populate_transaction_table(sorted_transactions)
 
     def build_budgets_tab(self):
         """Placeholder content for the Budgets tab."""
         label = ttk.Label(self.budgets_tab, text="Budgets — progress bars will go here", font=("Arial", 14))
         label.pack(pady=20)
-
-# ----------- Reports Section -------------
 
     def build_reports_tab(self):
         # Builds the Reports tab: a pie chart of spending by category,
@@ -158,7 +299,6 @@ class LedgerWiseApp:
         # Draws (or redraws) a pie chart of spending by category for
         # whichever month is currently selected in the dropdown.
         # Clear out any previously drawn chart before drawing a new one
-
         for widget in self.chart_frame.winfo_children():
             widget.destroy()
 
