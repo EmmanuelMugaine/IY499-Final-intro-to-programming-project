@@ -6,7 +6,7 @@
 
 import tkinter as tk    #Import for the window
 from tkinter import ttk #Import for the dashboard and tabs
-from datetime import date
+from datetime import date #Configuring the date
 
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -120,7 +120,7 @@ class LedgerWiseApp:
         # Filters the master (all-accounts) transaction/budget lists down
         # to just the account currently selected in the dropdown, and
         # stores the result in self.transactions_list
-        
+
         selected_name = self.account_var.get()
         account_id = self.account_name_to_id.get(selected_name)
         self.current_account_id = account_id
@@ -499,11 +499,9 @@ class LedgerWiseApp:
         self.draw_budget_bars()
 
     def draw_budget_bars(self):
-        """
-        Draws (or redraws) one row per category for the selected month,
-        each with a progress bar showing amount spent vs budget, and
-        the remaining amount as text.
-        """
+        # Draws (or redraws) one row per category for the selected month,
+        # each with a progress bar showing amount spent vs budget, and the remaining amount as text.
+
         # Clear any previously drawn rows before redrawing
         for widget in self.budget_bars_frame.winfo_children():
             widget.destroy()
@@ -558,10 +556,9 @@ class LedgerWiseApp:
             progress_bar.pack(fill="x", pady=(2, 0))
 
     def build_reports_tab(self):
-        """
-        Builds the Reports tab: a pie chart of spending by category,
-        with a dropdown to pick which month to view.
-        """
+        # Builds the Reports tab: a pie chart of spending by category,
+        # with a dropdown to pick which month to view.
+
         # Clear any widgets from a previous build (this method is re-run
         # whenever the selected account changes)
         for widget in self.reports_tab.winfo_children():
@@ -641,7 +638,7 @@ class LedgerWiseApp:
         canvas.draw()
         canvas.get_tk_widget().pack(fill="both", expand=True)
 
-
+#Running the Program
 def main():
     # load_all_data() prints a clear message and exits (sys.exit(1)) if
     # any CSV is missing, malformed, or has the wrong columns — no need
