@@ -154,3 +154,53 @@ if same_day_transactions:
         print(f"  {t['Company Name']} - £{t['Amount']} ({t['Category']})")
 else:
     print("No transactions found on that date.")
+
+#--------- Budget Tracking Logic -----------
+    #Compares actual spending against budgeted amounts, grouped by
+    #Account ID, Category, and Month (YYYY-MM).
+def track_budgets(transactions, budgets):    #Returns a list of dictionaries summarising each group.
+
+    # Step 1: Group transaction totals by (Account ID, Category, Year-Month)
+    spending = {}  # key: (account_id, category, "YYYY-MM") -> total spent
+
+    for t in transactions:
+        # Only track spending (negative amounts / expenses)
+        # Adjust this check depending on how you store expenses vs income
+        year_month = t["Date"].strftime("%Y-%m")
+        group_key = (t["Account ID"], t["Category"], year_month)
+
+        if group_key not in spending:
+            spending[group_key] = 0.0
+        spending[group_key] += t["Amount"]
+
+    # Step 2: Compare each budget entry against the grouped spending
+    budget_status = []
+
+    for b in budgets:
+        account_id = b["Account ID"]
+        category = b["Category"]
+        budget_amount = b["Budget Amount"]
+
+        # Find every month that has spending for this account/category
+        matching_months = [
+            key[2] for key in spending
+            if key[0] == account_id and key[1] == category
+        ]
+
+        for month in matching_months:
+            spent = spending[(account_id, category, month)]
+            remaining = budget_amount - spent
+            percent_used = (spent / budget_amount * 100) if budget_amount > 0 else 0
+
+            budget_status.append({
+                "Account ID": account_id,
+                "Category": category,
+                "Month": month,
+                "Budgeted": budget_amount,
+                "Spent": round(spent, 2),
+                "Remaining": round(remaining, 2),
+                "Percent Used": round(percent_used, 1),
+                "Over Budget": spent > budget_amount
+            })
+
+    return budget_status
