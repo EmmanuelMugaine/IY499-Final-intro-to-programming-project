@@ -2,21 +2,6 @@
 
 **Personal Finance Tracker, Budgeter & Forecaster**
 
-## Identifying Information
-
-| | |
-|---|---|
-| **Name** | Emmanuel Mugaine |
-| **P-Number** | P509970 |
-| **Student ID Number** | 303065252 |
-| **Course Code** | IY499 — Introduction to Programming |
-| **Assessment** | Practical Programming Assignment |
-
-## Declaration of Own Work
-
-**I confirm that this assignment is my own work.**
-**Where I have referred to online sources, I have provided comments detailing the reference and included a link to the source.**
-
 ## Description
 
 LedgerWise is a desktop personal finance application built in Python with a Tkinter graphical interface. It tracks income and expenses from a single checking account, compares actual spending against a per-category monthly budget, and provides a simple rule-based forecast of whether the user is on track to stay within budget by the end of the current month.
